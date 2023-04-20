@@ -101,6 +101,8 @@ GEM
       reline (>= 0.3.1)
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
+    dockerfile-rails (1.2.5)
+      rails
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -146,6 +148,10 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.14.3-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.14.3-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
     parallel (1.23.0)
     parser (3.2.2.0)
@@ -281,6 +287,8 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   better_errors
@@ -289,6 +297,7 @@ DEPENDENCIES
   bullet
   capybara
   debug
+  dockerfile-rails (>= 1.2)
   factory_bot_rails
   importmap-rails
   jbuilder
