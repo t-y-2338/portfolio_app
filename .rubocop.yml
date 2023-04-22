@@ -18,3 +18,7 @@ AllCops:
 # 日本語でのコメントを許可
 Style/AsciiComments:
   Enabled: false
+
+# コメントを不要にする
+Style/Documentation:
+  Enabled: false
