@@ -1,2 +1,28 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<div class="container">
+  <h1>ユーザー登録</h1>
+  <%= form_for(@user) do |f| %>
+    <div>
+      <%= f.label :name, "ユーザー名" %>
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.email_field :email %>
+    </div>
+    <div>
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, "パスワード再入力" %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <%= f.submit "登録"%>
+  <% end %>
+  <div class='text-center'>
+    <p>
+      登録済みの方は
+      <%= link_to "ログインページへ", login_path %>
+    </p>
+  </div>
+</div>
