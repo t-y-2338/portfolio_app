@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   before_action :require_login
-  before_action :set_user, only: %i[edit update destroy]
+  before_action :set_user, only: %i[edit update done destroy]
 
   def index
+    @today = Time.zone.today
     @posts = Post.where(user: current_user).order(created_at: :desc)
   end
 
@@ -17,7 +18,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to posts_show_path(post.id)
+      redirect_to posts_path(@post.id)
     else
       render :new
     end
@@ -27,10 +28,16 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to posts_show_path(post.id)
+      redirect_to posts_show_path(@post.id)
     else
       render :edit
     end
+  end
+
+  def done
+    @today = Time.zone.today
+    @post.update(done_on: @today)
+    redirect_to posts_path
   end
 
   def destroy

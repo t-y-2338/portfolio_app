@@ -1,2 +1,29 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="post_container">
+  <div class="posts_header">
+    <h1>計画一覧</h1>
+    <%= link_to "新規作成", new_post_path %>
+  </div>
+  <ul class="postsList">
+    <li class="post">
+      <% @posts.each do |post| %>
+        <p><%= post.title %></p>
+        <p><%= post.description%></p>
+        <p>期日
+          <% if post.due_date == nil %>
+            未設定
+          <% else %>
+            <%= l post.due_date %>
+            <% if (post.due_date - @today).to_i > 0 %>
+              まで あと <%= (post.due_date - @today).to_i %>日
+            <% elsif (post.due_date - @today).to_i == 0 %>
+              <span>当日</span>
+            <% end %>
+          <% end %>
+        </p>
+        <%= link_to "詳細", post %>
+        <%= link_to "完了", done_path %>
+        <%= link_to "削除", post, data: {turbo_method: :delete} %>
+      <% end %>
+    </li>
+  </ul>
+</div>
