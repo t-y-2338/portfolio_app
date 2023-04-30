@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
 
+  post 'done', to: "posts#done"
+
   resources :users, only: %i[new create]
   resources :posts
 end
