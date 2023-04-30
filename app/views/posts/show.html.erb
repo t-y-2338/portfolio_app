@@ -1,2 +1,18 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="post_container">
+  <div class="post_wrapper">
+    <h3><%= @post.title %></h3>
+    <p>期日
+      <% if @post.due_date == nil %>
+        未設定
+      <% else %>
+        <%= l @post.due_date %>
+      <% end %>
+    </p>
+    <p><%= @post.description %></p>
+  </div>
+  <% if @post.done_on == nil %>
+    <%= link_to "編集", edit_post_path %>
+    <%= link_to "完了", done_path(@post.id), data: {turbo_method: :post} %>
+  <% end %>
+  <%= link_to "一覧に戻る", posts_path %>
+</div>
