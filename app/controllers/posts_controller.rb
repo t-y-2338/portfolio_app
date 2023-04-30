@@ -4,7 +4,8 @@ class PostsController < ApplicationController
 
   def index
     @today = Time.zone.today
-    @posts = Post.where(user: current_user).order(created_at: :desc)
+    @posts = Post.where(user: current_user, done_on: nil).order(created_at: :desc)
+    @posts_done = Post.where(user: current_user).where.not(done_on: nil)
   end
 
   def show
@@ -18,17 +19,19 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to posts_path(@post.id)
+      redirect_to post_path(@post.id)
     else
       render :new
     end
   end
 
-  def edit; end
+  def edit
+    redirect_to post_path(@post.id) if @post.done_on.present?
+  end
 
   def update
     if @post.update(post_params)
-      redirect_to posts_show_path(@post.id)
+      redirect_to post_path(@post.id)
     else
       render :edit
     end

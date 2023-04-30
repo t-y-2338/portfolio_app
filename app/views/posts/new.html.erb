@@ -1,16 +1,18 @@
-<%= form_with model: @post, local: true do |f| %>
-  <div class="form-content">
-    <%= f.label :title, "タイトル" %>
-    <%= f.text_field :title %>
-  </div>
-  <div class="form-content">
-    <%= f.label :description, "メモ" %>
-    <%= f.text_area :description %>
-  </div>
-  <div class="form-content">
-    <%= f.label :due_date, "期日" %>
-    <%= f.date_field :due_date %>
-  </div>
-  <%= f.submit "保存" %>
-<% end %>
-<%= link_to "キャンセル", :back %>
+<div class="form">
+  <%= form_with model: @post, local: true do |f| %>
+    <div class="form-content">
+      <%= f.label :title, "タイトル" %>
+      <%= f.text_field :title %>
+    </div>
+    <div class="form-content">
+      <%= f.label :description, "メモ" %>
+      <%= f.text_area :description %>
+    </div>
+    <div class="form-content">
+      <%= f.label :due_date, "期日" %>
+      <%= f.date_field :due_date %>
+    </div>
+    <%= f.submit "保存" %>
+  <% end %>
+  <%= link_to "キャンセル", :back %>
+</div>
