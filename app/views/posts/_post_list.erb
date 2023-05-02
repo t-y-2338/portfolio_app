@@ -2,17 +2,23 @@
   <li class="post">
     <p><%= post.title %></p>
     <p><%= post.description%></p>
-    <p>期日
-      <% if post.due_date == nil %>
-        未設定
-      <% else %>
-        <%= l post.due_date %>
-      <% end %>
-    </p>
-    <%= link_to "詳細", post %>
-    <% if post.done_on == nil %>
-      <%= link_to "完了", done_path(post.id), data: {turbo_method: :post} %>
+    <% if post.done_on.nil? %>
+      <p>期日
+        <% if post.due_date == nil %>
+          未設定
+        <% else %>
+          <%= l post.due_date %>
+        <% end %>
+      </p>
+    <% else %>
+      <p>完了日
+        <%= l post.done_on %>
+      </p>
     <% end %>
-    <%= link_to "削除", post, data: {turbo_method: :delete} %>
+    <%= link_to "詳細を見る", post %>
+    <% if post.done_on == nil %>
+      <%= link_to "完了にする", done_path(post.id), data: {turbo_method: :post} %>
+    <% end %>
+    <%= link_to "削除する", post, data: {turbo_method: :delete} %>
   </li>
 </ul>
