@@ -6,11 +6,6 @@ class PostsController < ApplicationController
     @today = Time.zone.today
     @posts = Post.where(user: current_user, done_on: nil).order(created_at: :desc)
     @posts_done = Post.where(user: current_user).where.not(done_on: nil)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: { posts: @posts, posts_done: @posts_done } }
-    end
   end
 
   def show

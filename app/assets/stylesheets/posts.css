@@ -1,10 +1,10 @@
-.tab {
+.posts_tab li {
   width: 100%;
   padding: 10px;
   cursor: pointer;
 }
 
-.active {
+/* .active {
   color: #FFF;
   background: #19b5d1;
 }
@@ -15,4 +15,4 @@
 
 .show {
   display: block;
-}
+} */

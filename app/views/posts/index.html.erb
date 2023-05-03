@@ -1,28 +1,44 @@
 <%= current_user.name %>
 <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete } %>
 
-<div class="posts_container">
-  <ul class="posts_tabs">
-    <li class="tab active">計画一覧</li>
-    <li class="tab">完了済一覧</li>
-  </ul>
+<div class="posts_container" id="posts">
   <div class="posts_header">
     <%= link_to "新規作成", new_post_path %>
   </div>
-  <div class="posts_content tabbox show">
-    <div class="posts_top">
-      <h2>計画一覧</h2>
+  <ul class="posts_tab">
+    <li @click="select('1')" v-bind:class="{'active': show == '1'}">計画一覧</li>
+    <li @click="select('2')" v-bind:class="{'active': show == '2'}">完了済一覧</li>
+  </ul>
+  <div class="posts_contents">
+    <div v-if="show === '1'">
+      <div class="posts_top">
+        <h2>計画一覧</h2>
+      </div>
+      <div class="postsList">
+        <%= render partial: 'post_list', collection: @posts, as: 'post' %>
+      </div>
     </div>
-    <div class="postsList">
-      <%= render partial: 'post_list', collection: @posts, as: 'post' %>
-    </div>
-  </div>
-  <div class="posts_content tabbox">
-    <div class="posts_top">
-      <h2>完了済一覧</h2>
-    </div>
-    <div class="postsList">
-      <%= render partial: 'post_list', collection: @posts_done, as: 'post' %>
+    <div v-else-if="show === '2'">
+      <div class="posts_top">
+        <h2>完了済一覧</h2>
+      </div>
+      <div class="postsList">
+        <%= render partial: 'post_list', collection: @posts_done, as: 'post' %>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  new Vue({
+    el: '#posts',
+    data: {
+        show: '1'
+      },
+    methods: {
+      select: function (num) {
+        this.show = num;
+      }
+    }
+  });
+</script>
