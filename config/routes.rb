@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
 
-  get 'posts', to: 'posts#index'
-  post '/posts/:id/done', to: "posts#done", as: 'done'
-
   resources :users, only: %i[new create]
-  resources :posts
+  resources :posts do
+    member do
+      post :done
+    end
+  end
 end

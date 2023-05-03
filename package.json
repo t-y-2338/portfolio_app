@@ -11,5 +11,10 @@
   },
   "author": "",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "esbuild": "0.17.18",
+    "jquery": "^3.6.4",
+    "rails-ujs": "^5.2.8-1"
+  }
 }

@@ -15,10 +15,10 @@
         <%= l post.done_on %>
       </p>
     <% end %>
-    <%= link_to "詳細を見る", post %>
+    <%= link_to "詳細", post_path(post.id) %>
     <% if post.done_on == nil %>
-      <%= link_to "完了にする", done_path(post.id), data: {turbo_method: :post} %>
+      <%= link_to "完了", done_post_path(post.id), data: { turbo_method: :post, turbo_confirm: "完了済にしますか？" } %>
     <% end %>
-    <%= link_to "削除する", post, data: {turbo_method: :delete} %>
+    <%= link_to "削除", post_path(post.id), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
   </li>
 </ul>
