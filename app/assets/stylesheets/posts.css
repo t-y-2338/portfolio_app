@@ -1,0 +1,18 @@
+.posts_tab li {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* .active {
+  color: #FFF;
+  background: #19b5d1;
+}
+
+.tabbox {
+  display: none;
+}
+
+.show {
+  display: block;
+} */

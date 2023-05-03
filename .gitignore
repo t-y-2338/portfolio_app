@@ -34,3 +34,5 @@
 /.DS_Store
 /.dockerignore
 /fly.toml
+
+/node_modules

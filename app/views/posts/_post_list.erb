@@ -1,0 +1,24 @@
+<ul class="posts-content">
+  <li class="post">
+    <p><%= post.title %></p>
+    <p><%= post.description%></p>
+    <% if post.done_on.nil? %>
+      <p>期日
+        <% if post.due_date == nil %>
+          未設定
+        <% else %>
+          <%= l post.due_date %>
+        <% end %>
+      </p>
+    <% else %>
+      <p>完了日
+        <%= l post.done_on %>
+      </p>
+    <% end %>
+    <%= link_to "詳細", post_path(post.id) %>
+    <% if post.done_on == nil %>
+      <%= link_to "完了", done_post_path(post.id), data: { turbo_method: :post, turbo_confirm: "完了済にしますか？" } %>
+    <% end %>
+    <%= link_to "削除", post_path(post.id), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+  </li>
+</ul>
