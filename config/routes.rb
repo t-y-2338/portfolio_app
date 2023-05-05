@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     member do
       post :done
     end
+    resources :memos, only: %i[create edit update destroy]
   end
 end
