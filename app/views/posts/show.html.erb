@@ -1,9 +1,14 @@
 <div class="post_container">
-  <div class="posts_header">
-    <%= link_to "一覧に戻る", posts_path %>
-  </div>
   <div class="post_wrapper">
-    <h3><%= @post.title %></h3>
+    <%= link_to "一覧に戻る", posts_path %>
+    <div class="post_header">
+      <h3><%= @post.title %></h3>
+      <% if @post.done_on == nil %>
+        <%= link_to "編集", edit_post_path %>
+      <% end %>
+      <%= link_to "完了", done_post_path(@post.id), data: { turbo_method: :post, turbo_confirm: "完了済にしますか？" } %>
+      <%= link_to "削除", post_path(@post.id), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+    </div>
     <% if @post.done_on.nil? %>
       <p>期日
         <% if @post.due_date == nil %>
@@ -20,9 +25,39 @@
     </p>
     <p><%= @post.description %></p>
   </div>
-  <% if @post.done_on == nil %>
-    <%= link_to "編集", edit_post_path %>
-    <%= link_to "完了", done_post_path(@post.id), data: { turbo_method: :post, turbo_confirm: "完了済にしますか？" } %>
-  <% end %>
-  <%= link_to "削除", post_path(@post.id), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+  <div class="memo_form" id="memos">
+    <div class="memo_saveForm">
+      <button @click="toggleMemoForm">{{ showForm ? 'キャンセル' : 'メモを追加' }}</button>
+    </div>
+    <div v-show="showForm">
+      <%= form_with model: [@post, @memo], local: true do |f| %>
+        <%= f.text_area :body, placeholder: "メモを入力してください" %>
+        <%= f.submit "保存" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="memos">
+    <div class="memos_content">
+      <%= render partial: "memos/memo" %>
+      <%# <%= render partial: "memos/memo", collection: @memos, as: 'memo' %>
+    </div>
+  </div>
 </div>
+
+<script>
+  new Vue({
+    el: "#memos",
+    data: {
+      showForm: false,
+      memo: {
+        body: '',
+      }
+    },
+    methods: {
+      toggleMemoForm() {
+        this.showForm = !this.showForm;
+        this.memo.body = "";
+      }
+    }
+  });
+</script>
