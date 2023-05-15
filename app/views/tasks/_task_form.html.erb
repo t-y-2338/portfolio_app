@@ -1,0 +1,30 @@
+<div class="task_form" id="form">
+  <div class="task_newForm">
+    <button @click="toggleNewForm">{{ showNewForm ? 'キャンセル' : 'タスクを追加'}}</button>
+    <div v-show="showNewForm">
+      <%= form_with model: [@post, @task], local: true do |f| %>
+        <%= f.text_field :body, placeholder: "タスクを入力してください" %>
+        <%= f.submit "追加" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  Vue.createApp ({
+    setup() {
+      const showNewForm = Vue.ref(false);
+      const task = Vue.ref({ body: '' });
+      const toggleNewForm = () => {
+        showNewForm.value = !showNewForm.value;
+        task.value.body = '';
+      };
+
+      return {
+        showNewForm,
+        task,
+        toggleNewForm
+      };
+    }
+  }).mount('#form');
+</script>
