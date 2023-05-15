@@ -11,5 +11,11 @@ Rails.application.routes.draw do
       post :done
     end
     resources :memos, only: %i[create edit update destroy]
+    resources :tasks, only: %i[create update destroy] do
+      member do
+        patch :completed
+        patch :incomplete
+      end
+    end
   end
 end

@@ -1,6 +1,6 @@
-<div class="memo_content"  id="memo">
-  <% @memos.each_with_index do |memo, index| %>
-    <ul class="memo_form">
+<div class="memo_content" id="memo">
+  <ul class="memo_form">
+    <% @memos.each_with_index do |memo, index| %>
       <li v-show="!isShowEditForm(<%= index %>)"><%= memo.body %></li>
       <div v-show="isShowEditForm(<%= index %>)">
         <%= form_with model: [@post, memo], local: true do |f| %>
@@ -10,33 +10,38 @@
       </div>
       <button @click="toggleEditForm(<%= index %>)">{{ isShowEditForm(<%= index %>) ? 'キャンセル' : '編集' }}</button>
       <%= link_to "削除", post_memo_path(@post, memo), data: { turbo_method: :delete, turbo_confirm: "メモを削除しますか？" } %>
-    </ul>
-  <% end %>
+    <% end %>
+  </ul>
 </div>
 
 <script>
-  new Vue({
-    el: "#memo",
-    data: {
-      showForm: null,
-      activeMemoIndex: null,
-      memo: {
-        body: this.memo.body
-      }
-    },
-    methods: {
-      toggleEditForm(index) {
-        if (this.activeMemoIndex === index) {
-          this.showForm = null;
-          this.activeMemoIndex = null;
+  Vue.createApp ({
+    setup() {
+      const showForm = Vue.ref(null);
+      const activeMemoIndex = Vue.ref(null);
+      const memo = Vue.ref( {body: ''} );
+
+      const toggleEditForm = (index) => {
+        if (activeMemoIndex.value === index) {
+          showForm.value = null;
+          activeMemoIndex.value = null;
         } else {
-          this.showForm = true;
-          this.activeMemoIndex = index;
+          showForm.value = true;
+          activeMemoIndex.value = index;
         }
-      },
-      isShowEditForm(index) {
-        return this.showForm && this.activeMemoIndex === index;
-      }
+      };
+
+      const isShowEditForm = (index) => {
+        return showForm.value && activeMemoIndex.value === index;
+      };
+
+      return {
+        showForm,
+        activeMemoIndex,
+        memo,
+        toggleEditForm,
+        isShowEditForm
+      };
     }
-  });
+  }).mount('#memo');
 </script>

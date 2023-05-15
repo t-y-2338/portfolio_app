@@ -30,15 +30,17 @@
 </div>
 
 <script>
-  new Vue({
-    el: '#posts',
-    data: {
-        show: '1'
-      },
-    methods: {
-      select: function (num) {
-        this.show = num;
-      }
+  Vue.createApp({
+    setup() {
+      const show = Vue.ref('1');
+      const select = (num) => {
+        show.value = num;
+      };
+
+      return {
+        show,
+        select
+      };
     }
-  });
+  }).mount("#posts");
 </script>

@@ -1,0 +1,60 @@
+<div class="task_content" id="tasks">
+  <ul>
+    <% @tasks.each_with_index do |task, index| %>
+      <li v-show="!isShowEditForm(<%= index %>)">
+        <% if task.completed? %>
+          <span style="text-decoration: line-through;">
+            <%= task.body %>
+          </span>
+        <% else %>
+          <%= task.body %>
+        <% end %>
+      </li>
+      <div v-show="isShowEditForm(<%= index %>)">
+        <%= form_with model: [@post, task], local: true do |f| %>
+          <%= f.text_field :body, value: task.body %>
+          <%= f.submit "更新" %>
+        <% end %>
+      </div>
+      <button @click="toggleEditForm(<%= index %>)">{{ isShowEditForm(<%= index %>) ? 'キャンセル' : '編集' }}</button>
+      <div v-show="!isShowEditForm(<%= index %>)">
+        <% unless task.completed %>
+          <%= link_to "完了済にする", completed_post_task_path(@post, task), data: { turbo_method: :patch } %>
+        <% else %>
+          <%= link_to "未完了に戻す", incomplete_post_task_path(@post, task), data: { turbo_method: :patch, turbo_frame: 'tasks' } %>
+        <% end %>
+        <%= link_to "削除", post_task_path(@post, task), data: { turbo_method: :delete, turbo_confirm: "タスクを削除しますか？" } %>
+      </div>
+    <% end %>
+  </ul>
+</div>
+
+<script>
+  Vue.createApp ({
+    setup() {
+      const showForm = Vue.ref(null);
+      const activeTaskIndex = Vue.ref(null);
+
+      const toggleEditForm = (index) => {
+        if (activeTaskIndex.value === index) {
+          showForm.value = null;
+          activeTaskIndex.value = null;
+        } else {
+          showForm.value = true;
+          activeTaskIndex.value = index;
+        }
+      };
+
+      const isShowEditForm = (index) => {
+        return showForm.value && activeTaskIndex.value === index;
+      };
+
+      return {
+        showForm,
+        activeTaskIndex,
+        toggleEditForm,
+        isShowEditForm,
+      };
+    }
+  }).mount('#tasks');
+</script>

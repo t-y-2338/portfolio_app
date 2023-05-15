@@ -25,6 +25,10 @@
     </p>
     <p><%= @post.description %></p>
   </div>
+  <div class="task_list">
+    <%= render "tasks/task_form" %>
+    <%= render "tasks/task_content" %>
+  </div>
   <div class="memo_form" id="memos">
     <div class="memo_saveForm">
       <button @click="toggleMemoForm">{{ showForm ? 'キャンセル' : 'メモを追加' }}</button>
@@ -39,25 +43,25 @@
   <div class="memos">
     <div class="memos_content">
       <%= render partial: "memos/memo" %>
-      <%# <%= render partial: "memos/memo", collection: @memos, as: 'memo' %>
     </div>
   </div>
 </div>
 
 <script>
-  new Vue({
-    el: "#memos",
-    data: {
-      showForm: false,
-      memo: {
-        body: '',
-      }
-    },
-    methods: {
-      toggleMemoForm() {
-        this.showForm = !this.showForm;
-        this.memo.body = "";
-      }
+  Vue.createApp ({
+    setup() {
+      const showForm = Vue.ref(false);
+      const memo = Vue.ref({ body: '' });
+      const toggleMemoForm = () => {
+        showForm.value = !showForm.value;
+        memo.value.body = '';
+      };
+
+      return {
+        showForm,
+        memo,
+        toggleMemoForm
+      };
     }
-  });
+  }).mount('#memos');
 </script>
