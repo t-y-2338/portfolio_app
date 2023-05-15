@@ -10,6 +10,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @task = Task.new
+    @tasks = @post.tasks
     @memo = Memo.new
     @memos = @post.memos
   end
